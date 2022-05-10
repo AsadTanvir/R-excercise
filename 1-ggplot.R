@@ -33,6 +33,11 @@ ggplot(data = mpg) +
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) +
   facet_grid(drv ~ .)                    # facet in a column by drv
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(. ~ cyl)                   # facet in a row by cyl
+
+
+## ggplots: geom_smooth
+ggplot(data = mpg) +
+  geom_smooth(mapping= aes(x=displ, y=hwy, group= drv))
+
+ggplot(data = mpg) +
+  geom_smooth(mapping= aes(x=displ, y=hwy, color= drv))
