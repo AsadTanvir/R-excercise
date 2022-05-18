@@ -55,5 +55,71 @@ ggplot(data=mpg)+
 #or, above can be done in different way
 ggplot(data=mpg, mapping = aes(x=displ, y=hwy, color=drv))+
   geom_point()+
-  geom_smooth()  #this format is more effective and concise
+  geom_smooth(se=F)  # this format is more effective and concise
+                     # se= confidence interval (default=TRUE)
 
+# 'filter' is used to subset the data (ie. only drv "4" line)
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
+  geom_point(mapping = aes(color=drv))+
+  geom_smooth(data = filter(mpg, drv=="4"), color="red") 
+
+# Excercise 3.6.1(6):-
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
+  geom_point()+
+  geom_smooth(se=F)
+
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
+  geom_point()+
+  geom_smooth(mapping = aes(group=drv), se=F)
+
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy, color=drv))+
+  geom_point()+
+  geom_smooth(se=F)
+
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
+  geom_point(mapping=aes(color=drv))+
+  geom_smooth(se=F)
+
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
+  geom_point(mapping = aes(color=drv))+
+  geom_smooth(mapping = aes(linetype=drv), se=F)
+
+## ggplots: bar chart, histogram, box plots
+diamonds
+diamonds <- dput(diamonds)
+
+#bar plot
+ggplot(data=diamonds)+
+  geom_bar(mapping=aes(x=cut)) 
+
+#stat summary (max, min, median)
+ggplot(data=diamonds)+
+  stat_summary(mapping = aes(x=cut, y=depth),
+               fun.min = min,
+               fun.max = max,
+               fun = median)
+
+# bar plot by proportion rathen than frequency
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = stat(prop), group=1))
+
+# by 'cut' color
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+
+# by 'clarity' color
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+
+# position="fill" works like stacking,
+# makes it easier to compare proportions across groups.
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+
+# boxplot
+ggplot(data = diamonds, mapping = aes(x = cut, y = depth)) + 
+  geom_boxplot() +
+  coord_flip() # only used if x-axis can't accomodate the categories
