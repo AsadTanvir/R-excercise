@@ -1,5 +1,4 @@
 library(tidyverse)
-
 mpg <- dput(mpg)
 
 
@@ -24,7 +23,7 @@ ggplot(data = mpg) +
 
 ggplot(data = mpg) +
   geom_point(mapping = aes(x=displ, y= hwy))+
-  facet_grid(drv~class)                     # facet by multiple var. combination
+  facet_grid(drv~class)                   # facet by multiple var. combination(colm~row)
 
 ggplot(data = mpg) +
   geom_point(mapping = aes(x=displ, y= hwy))+
@@ -32,12 +31,28 @@ ggplot(data = mpg) +
 
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(drv ~ .)                    # facet in a column by drv
+  facet_grid(drv ~ .)                    # all in same col for a single var
 
 
 ## ggplots: geom_smooth
 ggplot(data = mpg) +
-  geom_smooth(mapping= aes(x=displ, y=hwy, group= drv))
+  geom_smooth(mapping= aes(x=displ, y=hwy))
 
 ggplot(data = mpg) +
-  geom_smooth(mapping= aes(x=displ, y=hwy, color= drv))
+  geom_smooth(mapping= aes(x=displ, y=hwy, group= drv)) #multiple lines in a plot by 'group' var
+
+ggplot(data = mpg) +
+  geom_smooth(mapping= aes(x=displ, y=hwy, color= drv)) #multiple lines by 'group'(diff color)
+
+ggplot(data = mpg)+
+  geom_smooth(mapping=aes(x=displ, y=hwy, linetype=drv)) #multiple lines by 'group'(diff line-types)
+
+# points and lines together
+ggplot(data=mpg)+
+  geom_point(mapping = aes(x=displ, y=hwy, color=drv))+
+  geom_smooth(mapping = aes(x=displ, y=hwy, color=drv))
+
+#or, above can be done in different way
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy, color=drv))+
+  geom_point()+
+  geom_smooth()  #this format is more effective and concise
