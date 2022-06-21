@@ -88,11 +88,11 @@ ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
 diamonds
 diamonds <- dput(diamonds)
 
-#bar plot
+# bar plot
 ggplot(data=diamonds)+
   geom_bar(mapping=aes(x=cut)) 
 
-#stat summary (max, min, median)
+# stat summary (max, min, median)
 ggplot(data=diamonds)+
   stat_summary(mapping = aes(x=cut, y=depth),
                fun.min = min,
@@ -123,3 +123,14 @@ ggplot(data = diamonds) +
 ggplot(data = diamonds, mapping = aes(x = cut, y = depth)) + 
   geom_boxplot() +
   coord_flip() # only used if x-axis can't accomodate the categories
+
+## Spatial data plot [geom_polygon]
+nz <- map_data("nz")
+
+ggplot(data=nz, mapping= aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", color = "black")
+
+# "coord_quickmap()" to plot by correct aspect ratio
+ggplot(nz, aes(long, lat, group=group))+
+  geom_polygon(fill="light green", color="black")+
+  coord_quickmap()
