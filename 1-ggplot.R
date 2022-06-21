@@ -15,23 +15,23 @@ ggplot(data = mpg) +
 ggplot(data = mpg) +
   geom_point(mapping = aes(x=displ, y=hwy, shape=class)) # 3rd var. "class" shown by shapes
 
-## ggplots: facets
+## ggplots: facets  (particularly useful for categorical variables)
 ggplot(data = mpg) +
   geom_point(mapping = aes(x=displ, y= hwy))+
-  facet_wrap(~class)                        # facet by one var.
+  facet_wrap(~class)                        # facet by one var. "class"
 
 
 ggplot(data = mpg) +
   geom_point(mapping = aes(x=displ, y= hwy))+
-  facet_grid(drv~class)                   # facet by multiple var. combination(colm~row)
+  facet_grid(drv~cyl)                   # facet by multiple var. combination(row~colm)
 
 ggplot(data = mpg) +
   geom_point(mapping = aes(x=displ, y= hwy))+
-  facet_grid(.~class)                      # all in same row for a single var
+  facet_grid(.~cyl)                      # all in same row by single var. columns
 
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) +
-  facet_grid(drv ~ .)                    # all in same col for a single var
+  facet_grid(drv ~ .)                    # all in same col for single var. rows
 
 
 ## ggplots: geom_smooth
@@ -59,8 +59,8 @@ ggplot(data=mpg, mapping = aes(x=displ, y=hwy, color=drv))+
                      # se= confidence interval (default=TRUE)
 
 # 'filter' is used to subset the data (ie. only drv "4" line)
-ggplot(data=mpg, mapping = aes(x=displ, y=hwy))+
-  geom_point(mapping = aes(color=drv))+
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy, color=drv))+
+  geom_point()+
   geom_smooth(data = filter(mpg, drv=="4"), color="red") 
 
 # Excercise 3.6.1(6):-
@@ -99,7 +99,7 @@ ggplot(data=diamonds)+
                fun.max = max,
                fun = median)
 
-# bar plot by proportion rathen than frequency
+# bar plot by proportion rather than frequency
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, y = stat(prop), group=1))
 
