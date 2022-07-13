@@ -1,4 +1,4 @@
-## Data transformation using "dplyr" package
+### Data transformation using "dplyr" package
 
 install.packages("nycflights13")
 library(tidyverse)
@@ -8,14 +8,13 @@ library(nycflights13)
 view(flights)
 data <- flights
 
-##1. Filter rows with "filter()" [kinda complicated if not understood properly]
+##1. Filter ROWS with "filter()" 
 # subset by a date
 May2 = filter(data, month==5, day==2)
 Sep2 = filter(data, month==9, day==2)
 
 # flights departing March or April
 Mar_Apr <- filter(data, month==3 | month==4)
-
 # flights not more than 2hrs delay
 hrs2delay <- filter(data, dep_delay<=120 & arr_delay<=120)
 
@@ -26,8 +25,6 @@ is.na(df) # TRUE means NA
 
 #arrival delay of two or more hours
 ArrDelay2hr <- filter(data, arr_delay>=120)
-#Flew to Houston
-Houston <- filter(data, dest == 'IAH' | dest == 'HOU')
 #Were delayed by at least an hour, but made up over 30 minutes in flight
 y <- filter(data, dep_delay>=60 & dep_delay-arr_delay >30)
 #How many flights have a missing dep_time?
@@ -39,7 +36,7 @@ missing_deptime <- filter(data, is.na(data$dep_time))
 depdel_asc <- arrange(data, dep_delay)
 depdel_desc <- arrange(data, desc(dep_delay))
 
-## 3. Select columns with "select()"
+## 3. Select COLUMNS with "select()"
 # Select all columns between year and day (inclusive)
 select(data, year:day)
 
@@ -47,10 +44,13 @@ select(data, year:day)
 select(data, -(year:day))
 
 #"rename()" can be used to rename a column
-data <- rename(data, dist = distance)
+data <- dplyr::rename(data, dist = distance) 
+# When two or more packages (that are loaded) contain functions with the same name, 
+# a double-colon operator :: needs to be used to get the version of the function 
+# from the package that was not the last loaded package (in this case 'dplyr' and 'plyr' packages).
 
 # Select helpers:: These functions allow selecting variables based on their names.
-# "everything()" helper func is used to bring specific columns in front
+# "everything()" is used to bring specific column(s) in front
 data <- select(data, time_hour, air_time, everything())
 
 # "any_of()"
